@@ -1,7 +1,7 @@
 <?php
 require_once 'db_connect.php'; // $pdo
 
-$stmt = $pdo->query("SELECT id, fullname, email, phone, gender, course, address, reg_date FROM student ORDER BY id DESC");
+$stmt = $pdo->query("SELECT id, fullname, email, phone, gender, course, address, reg_date FROM student ORDER BY id ASC");
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>

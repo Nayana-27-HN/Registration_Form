@@ -1,3 +1,5 @@
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
 body {
   font-family: "Segoe UI", sans-serif;
   background: #f0f6ff;
@@ -6,65 +8,131 @@ body {
   color: #222;
 }
 
-.form-container, .success-container, .view-container {
-  width: 50%;
-  margin: 80px auto;
+/* ---------- Containers / layout ---------- */
+/* Use a max-width so the white "sheet" looks centered and not full-screen */
+.form-container,
+.success-container,
+.view-container {
+  max-width: 980px;       /* change smaller/larger as you prefer (700-1000) */
+  width: calc(100% - 40px);
+  margin: 60px auto;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  padding: 30px;
+  box-shadow: 0 6px 20px rgba(20, 45, 80, 0.08);
+  padding: 30px 36px;
   text-align: center;
 }
 
+/* Headings */
 h2 {
-  color: #4a90e2;
+  color: #357ab8;
+  margin: 0 0 18px 0;
 }
 
+/* ---------- Form fields ---------- */
+/* Inputs should stretch to fill the container nicely */
 label {
   display: block;
   text-align: left;
-  margin-top: 10px;
-  font-weight: bold;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #333;
 }
 
-input, select, textarea {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #d6dbe6;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff;
+  color: #222;
+  resize: vertical;
 }
 
+/* smaller inputs (if you need side-by-side later) */
+.input-inline { width: 48%; display: inline-block; }
+
+/* Buttons */
 button, .btn {
+  display: inline-block;
   margin-top: 20px;
   background: #4a90e2;
   color: white;
-  padding: 10px 20px;
+  padding: 11px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
+  font-size: 16px;
 }
+button:hover, .btn:hover { background: #357ab8; }
 
-button:hover, .btn:hover {
-  background: #357ab8;
+/* ---------- Table styling (contained, wrapped, responsive) ---------- */
+/* Wrap table in a horizontal scroller on small screens */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;    /* allows horizontal scrolling on narrow viewports */
+  margin-top: 18px;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin: 0;
+  table-layout: fixed;   /* prevents one column from stretching the whole table */
+  min-width: 700px;      /* helps keep columns reasonable; adjust as needed */
 }
 
+/* Cell / header borders */
 table, th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #e0e6ef;
 }
-
 th, td {
-  padding: 10px;
+  padding: 12px 14px;
+  vertical-align: middle;
+  text-align: left;
+  word-wrap: break-word;    /* wrap long text like addresses or emails */
 }
 
+/* Header style + sticky */
 th {
   background: #4a90e2;
   color: white;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+/* Alternate row colors for readability */
+tbody tr:nth-child(odd) { background: #ffffff; }
+tbody tr:nth-child(even) { background: #fbfdff; }
+
+/* Smaller font for timestamp/reg_date if desired */
+td.timestamp { font-size: 0.95rem; color: #333; }
+
+/* Keep the white sheet padding on large tables (prevents overflow look) */
+.view-container .table-wrap { padding-bottom: 6px; }
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 900px) {
+  .form-container, .view-container, .success-container {
+    margin: 30px 12px;
+    padding: 20px;
+  }
+  table { min-width: 640px; }
+}
+
+@media (max-width: 520px) {
+  label { font-size: 14px; }
+  input, select, textarea { font-size: 14px; padding: 10px; }
+  .btn { padding: 10px 18px; font-size: 15px; }
+  table { min-width: 560px; }
 }
