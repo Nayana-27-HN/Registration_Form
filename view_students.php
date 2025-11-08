@@ -1,58 +1,31 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "studentdb";
+require_once 'db_connect.php'; // $pdo
 
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT * FROM student";
-$result = $conn->query($sql);
+$stmt = $pdo->query("SELECT id, fullname, email, phone, gender, course, address, reg_date FROM student ORDER BY id DESC");
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registered Students</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="view-container">
-    <h2>Registered Students</h2>
-    <table>
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Registered Students</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="view-container">
+  <h2>Registered Students</h2>
+  <table>
+    <tr><th>ID</th><th>Full Name</th><th>Email</th><th>Phone</th><th>Gender</th><th>Course</th><th>Address</th><th>Reg Date</th></tr>
+    <?php if ($rows): foreach ($rows as $r): ?>
       <tr>
-        <th>ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Gender</th>
-        <th>Course</th>
-        <th>Address</th>
+        <td><?php echo htmlspecialchars($r['id']); ?></td>
+        <td><?php echo htmlspecialchars($r['fullname']); ?></td>
+        <td><?php echo htmlspecialchars($r['email']); ?></td>
+        <td><?php echo htmlspecialchars($r['phone']); ?></td>
+        <td><?php echo htmlspecialchars($r['gender']); ?></td>
+        <td><?php echo htmlspecialchars($r['course']); ?></td>
+        <td><?php echo htmlspecialchars($r['address']); ?></td>
+        <td><?php echo htmlspecialchars($r['reg_date']); ?></td>
       </tr>
-      <?php
-      if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-          echo "<tr>
-                  <td>{$row['id']}</td>
-                  <td>{$row['fullname']}</td>
-                  <td>{$row['email']}</td>
-                  <td>{$row['phone']}</td>
-                  <td>{$row['gender']}</td>
-                  <td>{$row['course']}</td>
-                  <td>{$row['address']}</td>
-                </tr>";
-        }
-      } else {
-        echo "<tr><td colspan='7'>No students registered yet.</td></tr>";
-      }
-      $conn->close();
-      ?>
-    </table>
-  </div>
-</body>
-</html>
+    <?php endforeach; else: ?>
+      <tr><td colspan="8">No students yet.</td></tr>
+    <?php endif; ?>
+  </table>
+  <p><a href="index.html" class="btn">Register another</a></p>
+</div>
+</body></html>
